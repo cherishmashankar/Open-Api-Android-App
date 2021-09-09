@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/auth_nav_graph"
+    app:startDestination="@id/forgotPasswordFragment">
+
+    <fragment
+        android:id="@+id/launcherFragment"
+        android:name="com.example.android.open_api_android_app.openapi.ui.auth.LauncherFragment"
+        android:label="LauncherFragment" >
+        <action
+            android:id="@+id/action_launcherFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_in_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_in_left"/>
+
+        <action
+            android:id="@+id/action_launcherFragment_to_registerFragment"
+            app:destination="@id/registerFragment" app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_in_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_in_left"/>
+
+        <action
+            android:id="@+id/action_launcherFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment" app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_in_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_in_left"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.example.android.open_api_android_app.openapi.ui.auth.ForgotPasswordFragment"
+        android:label="ForgotPasswordFragment" />
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.android.open_api_android_app.openapi.ui.auth.LoginFragment"
+        android:label="LoginFragment" />
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.android.open_api_android_app.openapi.ui.auth.RegisterFragment"
+        android:label="RegisterFragment" />
+
+
+
+</navigation>
