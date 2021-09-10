@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/auth_nav_graph"
-    app:startDestination="@id/forgotPasswordFragment">
+    app:startDestination="@id/launcherFragment">
 
     <fragment
         android:id="@+id/launcherFragment"
@@ -11,23 +11,27 @@
             android:id="@+id/action_launcherFragment_to_loginFragment"
             app:destination="@id/loginFragment"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_in_left"/>
+            app:exitAnim="@anim/slide_out_left"/>
 
         <action
             android:id="@+id/action_launcherFragment_to_registerFragment"
-            app:destination="@id/registerFragment" app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_in_right"
+            app:destination="@id/registerFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_in_left"/>
+            app:exitAnim="@anim/slide_out_left"
+           />
 
         <action
             android:id="@+id/action_launcherFragment_to_forgotPasswordFragment"
-            app:destination="@id/forgotPasswordFragment" app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_in_right"
+            app:destination="@id/forgotPasswordFragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_in_left"/>
+            app:exitAnim="@anim/slide_out_left"
+            />
     </fragment>
 
     <fragment

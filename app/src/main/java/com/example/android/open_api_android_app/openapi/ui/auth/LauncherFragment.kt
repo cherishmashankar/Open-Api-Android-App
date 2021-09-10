@@ -1,32 +1,68 @@
 package com.example.android.open_api_android_app.openapi.ui.auth
 
 import android.os.Bundle
+
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.android.open_api_android_app.R
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import com.example.android.open_api_android_app.databinding.FragmentLauncherBinding
 
-/**
- * A simple [Fragment] subclass.
- * Use the [LauncherFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
+
 class LauncherFragment : Fragment() {
+    private var _binding: FragmentLauncherBinding? = null
+
+    // This property is only valid between onCreateView and
+// onDestroyView.
+    private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_launcher, container, false)
+        _binding = FragmentLauncherBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
     }
 
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.register.setOnClickListener {
+            navRegistration()
+        }
+        binding.login.setOnClickListener {
+            navLogin()
+        }
+        binding.forgotPassword.setOnClickListener {
+            navForgotPassword()
+        }
+        binding.focusableView.requestFocus()
+
+    }
+
+    private fun navForgotPassword() {
+        findNavController().navigate(R.id.action_launcherFragment_to_forgotPasswordFragment)
+    }
+
+    private fun navLogin() {
+        findNavController().navigate(R.id.action_launcherFragment_to_loginFragment)
+    }
+
+    private fun navRegistration() {
+        findNavController().navigate(R.id.action_launcherFragment_to_registerFragment)
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

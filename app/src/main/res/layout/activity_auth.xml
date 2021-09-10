@@ -14,38 +14,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/fragment_container"
-        android:visibility="invisible"
         >
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/auth_fragments_container"
+        <fragment
+            android:id="@+id/auth_nav_host_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:defaultNavHost="true"
-            app:navGraph="@navigation/auth_nav_graph"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/auth_nav_graph"
             />
 
     </FrameLayout>
-
-
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_height="75dp"
-        android:id="@+id/splash_logo"
-        android:src="@drawable/codingwithmitch_logo"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias=".4"
-        />
-
 
 
     <ProgressBar
@@ -57,7 +41,9 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintVertical_bias="0.10"
-        android:visibility="gone"
+        android:visibility="invisible"
         />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
