@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import com.example.android.open_api_android_app.R
+import com.example.android.open_api_android_app.openapi.util.GenericApiResponse
 
 
 class RegisterFragment : BaseAuthFragment() {
@@ -23,6 +25,21 @@ class RegisterFragment : BaseAuthFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         Log.d(TAG, "RegisterFragment: ${viewModel.hashCode()}")
+
+        viewModel.testRegister().observe(viewLifecycleOwner, Observer { response ->
+
+            when(response){
+                is GenericApiResponse.ApiSuccessResponse ->{
+                    Log.d(TAG, "REGISTER RESPONSE: ${response.body}")
+                }
+                is GenericApiResponse.ApiErrorResponse ->{
+                    Log.d(TAG, "REGISTER RESPONSE: ${response.errorMessage}")
+                }
+                is GenericApiResponse.ApiEmptyResponse ->{
+                    Log.d(TAG, "REGISTER RESPONSE: Empty Response")
+                }
+            }
+        })
     }
 
 
