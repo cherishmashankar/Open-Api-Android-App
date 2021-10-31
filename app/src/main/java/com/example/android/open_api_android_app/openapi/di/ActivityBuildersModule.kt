@@ -6,6 +6,7 @@ import com.example.android.open_api_android_app.openapi.di.auth.AuthModule
 import com.example.android.open_api_android_app.openapi.di.auth.AuthScope
 import com.example.android.open_api_android_app.openapi.di.auth.AuthViewModelModule
 import com.example.android.open_api_android_app.openapi.ui.auth.AuthActivity
+import com.example.android.open_api_android_app.openapi.ui.main.MainActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -17,5 +18,9 @@ abstract class ActivityBuildersModule {
         modules = [AuthModule::class, AuthFragmentBuildersModule::class, AuthViewModelModule::class]
     )
     abstract fun contributeAuthActivity(): AuthActivity
+
+
+    @ContributesAndroidInjector
+    abstract fun contributeMainActivity(): MainActivity
 
 }

@@ -6,10 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 
 import com.example.android.open_api_android_app.R
 import com.example.android.open_api_android_app.databinding.FragmentLoginBinding
+import com.example.android.open_api_android_app.openapi.models.AuthToken
 import com.example.android.open_api_android_app.openapi.ui.auth.state.LoginFields
 import com.example.android.open_api_android_app.openapi.util.GenericApiResponse
 
@@ -17,6 +20,7 @@ import com.example.android.open_api_android_app.openapi.util.GenericApiResponse
 class LoginFragment : BaseAuthFragment() {
 
     private var _binding: FragmentLoginBinding? = null
+
 
     // This property is only valid between onCreateView and
 // onDestroyView.
@@ -36,6 +40,13 @@ class LoginFragment : BaseAuthFragment() {
 
         Log.d(TAG, "LoginFragment: ${viewModel.hashCode()}")
         subscribeObserver()
+
+
+
+
+
+
+
 
     }
 
