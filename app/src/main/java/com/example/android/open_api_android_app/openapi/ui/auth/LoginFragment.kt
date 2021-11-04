@@ -13,8 +13,10 @@ import androidx.lifecycle.Observer
 import com.example.android.open_api_android_app.R
 import com.example.android.open_api_android_app.databinding.FragmentLoginBinding
 import com.example.android.open_api_android_app.openapi.models.AuthToken
+import com.example.android.open_api_android_app.openapi.ui.auth.state.AuthStateEvent
 import com.example.android.open_api_android_app.openapi.ui.auth.state.LoginFields
 import com.example.android.open_api_android_app.openapi.util.GenericApiResponse
+import kotlin.math.log
 
 
 class LoginFragment : BaseAuthFragment() {
@@ -41,10 +43,9 @@ class LoginFragment : BaseAuthFragment() {
         Log.d(TAG, "LoginFragment: ${viewModel.hashCode()}")
         subscribeObserver()
 
-
-
-
-
+        binding.loginButton.setOnClickListener {
+           login()
+        }
 
 
 
@@ -59,6 +60,17 @@ class LoginFragment : BaseAuthFragment() {
 
             } })
     }
+
+    fun login(){
+     viewModel.setStateEvent(
+         AuthStateEvent.LoginAttemptEvent(
+             binding.inputEmail.text.toString(),
+             binding.inputPassword.text.toString()
+
+         )
+     )
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
 

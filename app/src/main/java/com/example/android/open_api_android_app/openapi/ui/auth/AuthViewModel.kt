@@ -29,11 +29,19 @@ constructor(
         when(stateEvent){
 
             is LoginAttemptEvent -> {
-                return AbsentLiveData.create()
+                return authRepository.atttemptLogin(
+                    stateEvent.email,
+                    stateEvent.password
+                )
             }
 
             is RegisterAttemptEvent -> {
-                return AbsentLiveData.create()
+                return authRepository.atttemptRegistration(
+                    stateEvent.email,
+                    stateEvent.username,
+                    stateEvent.password,
+                    stateEvent.confirm_password
+                )
             }
 
             is CheckPreviousAUthEvent -> {

@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import com.example.android.open_api_android_app.R
 import com.example.android.open_api_android_app.databinding.FragmentLauncherBinding
 import com.example.android.open_api_android_app.databinding.FragmentRegisterBinding
+import com.example.android.open_api_android_app.openapi.ui.auth.state.AuthStateEvent
 import com.example.android.open_api_android_app.openapi.ui.auth.state.RegistrationFields
 import com.example.android.open_api_android_app.openapi.util.GenericApiResponse
 
@@ -39,6 +40,10 @@ class RegisterFragment : BaseAuthFragment() {
         Log.d(TAG, "RegisterFragment: ${viewModel.hashCode()}")
         subscribeObservers()
 
+        binding.registerButton.setOnClickListener {
+            register()
+        }
+
 
     }
 
@@ -51,6 +56,18 @@ class RegisterFragment : BaseAuthFragment() {
                 it.registration_confirm_password?.let{binding.inputPasswordConfirm.setText(it)}
             }
         })
+    }
+
+    fun register(){
+        viewModel.setStateEvent(
+            AuthStateEvent.RegisterAttemptEvent(
+                binding.inputEmail.text.toString(),
+                binding.inputUsername.text.toString(),
+                binding.inputPassword.text.toString(),
+                binding.inputPasswordConfirm.text.toString()
+
+            )
+        )
     }
 
     override fun onDestroyView() {
