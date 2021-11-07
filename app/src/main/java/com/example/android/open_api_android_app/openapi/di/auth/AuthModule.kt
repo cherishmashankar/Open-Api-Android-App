@@ -2,6 +2,7 @@ package com.example.android.open_api_android_app.openapi.di.auth
 
 
 
+import android.content.SharedPreferences
 import com.example.android.open_api_android_app.openapi.api.auth.OpenApiAuthService
 import com.example.android.open_api_android_app.openapi.persistence.AccountPropertiesDao
 import com.example.android.open_api_android_app.openapi.persistence.AuthTokenDao
@@ -30,13 +31,17 @@ class AuthModule{
         sessionManager: SessionManager,
         authTokenDao: AuthTokenDao,
         accountPropertiesDao: AccountPropertiesDao,
-        openApiAuthService: OpenApiAuthService
+        openApiAuthService: OpenApiAuthService,
+        sharedPreferences: SharedPreferences,
+        editor: SharedPreferences.Editor
         ): AuthRepository {
         return AuthRepository(
             authTokenDao,
             accountPropertiesDao,
             openApiAuthService,
-            sessionManager
+            sessionManager,
+        sharedPreferences,
+            editor
         )
     }
 

@@ -2,6 +2,8 @@ package com.example.android.open_api_android_app.openapi.di
 
 
 import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.room.Room
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
@@ -14,6 +16,7 @@ import com.example.android.open_api_android_app.openapi.persistence.AuthTokenDao
 import com.example.android.open_api_android_app.openapi.util.Constants.Companion.BASE_URL
 import com.example.android.open_api_android_app.openapi.util.LiveDataCallAdapter
 import com.example.android.open_api_android_app.openapi.util.LiveDataCallAdapterFactory
+import com.example.android.open_api_android_app.openapi.util.PreferenceKeys
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -25,6 +28,20 @@ import javax.inject.Singleton
 
 @Module
 class AppModule{
+
+    @Singleton
+    @Provides
+    fun provideSharedPreferences(application: Application): SharedPreferences{
+        return application.getSharedPreferences(PreferenceKeys.APP_PREFERENCES,Context.MODE_PRIVATE)
+
+    }
+
+    @Singleton
+    @Provides
+    fun provideSharedPrefsEditor(sharedPrefences: SharedPreferences): SharedPreferences.Editor{
+        return sharedPrefences.edit()
+    }
+
 
     @Singleton
     @Provides

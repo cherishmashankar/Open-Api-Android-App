@@ -13,6 +13,9 @@ import com.example.android.open_api_android_app.openapi.ui.BaseActivity
 import com.example.android.open_api_android_app.openapi.ui.auth.AuthActivity
 
 class MainActivity  : BaseActivity() {
+    override fun displayProgresssBar(bool: Boolean) {
+        TODO("Not yet implemented")
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -4,21 +4,32 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ProgressBar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
+import androidx.navigation.findNavController
 import com.example.android.open_api_android_app.R
 import com.example.android.open_api_android_app.openapi.ui.BaseActivity
 import com.example.android.open_api_android_app.openapi.ui.ResponseType
+import com.example.android.open_api_android_app.openapi.ui.auth.state.AuthStateEvent
 import com.example.android.open_api_android_app.openapi.ui.main.MainActivity
 import com.example.android.open_api_android_app.openapi.viewmodels.ViewModelProviderFactory
 import javax.inject.Inject
 
-class AuthActivity : BaseActivity(){
+
+class AuthActivity : BaseActivity(), NavController.OnDestinationChangedListener{
 
     @Inject
     lateinit var providerFactory: ViewModelProviderFactory
 
+
+
     lateinit var viewModel: AuthViewModel
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,11 +37,14 @@ class AuthActivity : BaseActivity(){
         setContentView(R.layout.activity_auth)
 
         viewModel = ViewModelProvider(this,providerFactory).get(AuthViewModel::class.java)
+        findNavController(R.id.auth_nav_host_fragment).addOnDestinationChangedListener(this)
         subscribeObserver()
+        checkPreviousAuthUser()
     }
 
     fun subscribeObserver(){
         viewModel.dataState.observe(this, Observer { dataState ->
+            onDataStateChange(dataState)
             dataState.data?.let { data ->
                 data.data?.let { event ->
                     event.getContentIfNotHandled()?.let {
@@ -40,33 +54,9 @@ class AuthActivity : BaseActivity(){
                         }
                     }
                 }
-
-                data.response?.let { event ->
-                    event.getContentIfNotHandled()?.let {
-                        when (it.responseType) {
-
-                            is ResponseType.Dialog -> {
-                                //inflate error dialog
-                            }
-
-                            is ResponseType.Toast -> {
-                                //show toast
-
-                            }
-
-                            is ResponseType.None -> {
-                                Log.e(TAG, "AuthActivity: subscribeObserver, Response: ${it.message} " )
-
-                            }
-                        }
-                    }
-
-                }
             }
 
-            dataState.error?.let {
 
-            }
 
         })
 
@@ -85,11 +75,33 @@ class AuthActivity : BaseActivity(){
         })
     }
 
+    fun checkPreviousAuthUser(){
+        viewModel.setStateEvent(AuthStateEvent.CheckPreviousAUthEvent())
+    }
+
     private fun navMainActivity() {
 
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
 
+    }
+
+    override fun onDestinationChanged(
+        controller: NavController,
+        destination: NavDestination,
+        arguments: Bundle?
+    ) {
+        viewModel.cancelActiveJob()
+    }
+
+    override fun displayProgresssBar(bool: Boolean) {
+        val progress_bar = findViewById<ProgressBar>(R.id.progress_bar)
+        if(bool){
+            progress_bar.visibility = View.VISIBLE
+        }
+        else{
+            progress_bar.visibility = View.INVISIBLE
+        }
     }
 }

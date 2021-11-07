@@ -29,14 +29,14 @@ constructor(
         when(stateEvent){
 
             is LoginAttemptEvent -> {
-                return authRepository.atttemptLogin(
+                return authRepository.attemptLogin(
                     stateEvent.email,
                     stateEvent.password
                 )
             }
 
             is RegisterAttemptEvent -> {
-                return authRepository.atttemptRegistration(
+                return authRepository.attemptRegistration(
                     stateEvent.email,
                     stateEvent.username,
                     stateEvent.password,
@@ -45,7 +45,7 @@ constructor(
             }
 
             is CheckPreviousAUthEvent -> {
-                return AbsentLiveData.create()
+                return authRepository.checkPreviousAuthUser()
             }
 
 
@@ -80,6 +80,15 @@ constructor(
         }
         update.authToken = authToken
         _viewState.value = update
+    }
+
+    fun cancelActiveJob(){
+        authRepository.cancelActivityJobs()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        cancelActiveJob()
     }
 
 
