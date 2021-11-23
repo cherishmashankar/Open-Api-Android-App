@@ -17,6 +17,7 @@ import com.example.android.open_api_android_app.openapi.ui.ResponseType
 import com.example.android.open_api_android_app.openapi.ui.auth.state.AuthStateEvent
 import com.example.android.open_api_android_app.openapi.ui.main.MainActivity
 import com.example.android.open_api_android_app.openapi.viewmodels.ViewModelProviderFactory
+import com.google.android.material.appbar.AppBarLayout
 import javax.inject.Inject
 
 
@@ -40,6 +41,10 @@ class AuthActivity : BaseActivity(), NavController.OnDestinationChangedListener{
         findNavController(R.id.auth_nav_host_fragment).addOnDestinationChangedListener(this)
         subscribeObserver()
         checkPreviousAuthUser()
+    }
+
+    override fun expandAppbar() {
+        //findViewById<AppBarLayout>(R.id.app_bar)
     }
 
     fun subscribeObserver(){
