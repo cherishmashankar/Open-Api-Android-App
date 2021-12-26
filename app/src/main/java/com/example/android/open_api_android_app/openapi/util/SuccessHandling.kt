@@ -14,5 +14,6 @@ class SuccessHandling {
         const val SUCCESS_BLOG_CREATED = "created"
         const val SUCCESS_BLOG_DELETED = "deleted"
 
+
     }
 }

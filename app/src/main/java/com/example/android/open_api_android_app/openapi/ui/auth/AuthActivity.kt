@@ -40,6 +40,11 @@ class AuthActivity : BaseActivity(), NavController.OnDestinationChangedListener{
         viewModel = ViewModelProvider(this,providerFactory).get(AuthViewModel::class.java)
         findNavController(R.id.auth_nav_host_fragment).addOnDestinationChangedListener(this)
         subscribeObserver()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
         checkPreviousAuthUser()
     }
 
@@ -100,7 +105,7 @@ class AuthActivity : BaseActivity(), NavController.OnDestinationChangedListener{
         viewModel.cancelActiveJob()
     }
 
-    override fun displayProgresssBar(bool: Boolean) {
+    override fun displayProgressBar(bool: Boolean) {
         val progress_bar = findViewById<ProgressBar>(R.id.progress_bar)
         if(bool){
             progress_bar.visibility = View.VISIBLE

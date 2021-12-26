@@ -45,6 +45,11 @@ abstract class BaseAccountFragment : DaggerFragment(){
         viewModel = activity?.run {
             ViewModelProvider(this, providerFactory).get(AccountViewModel::class.java)
         }?: throw Exception("Invalid activity")
+        cancelActiveJobs()
+    }
+
+    public fun cancelActiveJobs(){
+        viewModel.cancelActiveJob()
     }
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -54,6 +59,8 @@ abstract class BaseAccountFragment : DaggerFragment(){
             Log.e(TAG, "$context must implement DataStateChangeListener" )
         }
     }
+
+
 }
 
 

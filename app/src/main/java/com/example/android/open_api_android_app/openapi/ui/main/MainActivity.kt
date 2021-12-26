@@ -21,6 +21,9 @@ import com.example.android.open_api_android_app.openapi.ui.main.blog.ViewBlogFra
 import com.example.android.open_api_android_app.openapi.util.BottomNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.widget.Toolbar
+import com.example.android.open_api_android_app.openapi.ui.main.account.BaseAccountFragment
+import com.example.android.open_api_android_app.openapi.ui.main.blog.BaseBlogFragment
+import com.example.android.open_api_android_app.openapi.ui.main.create_blog.BaseCreateBlogFragment
 import com.example.android.open_api_android_app.openapi.util.setUpNavigation
 import com.google.android.material.appbar.AppBarLayout
 
@@ -29,9 +32,9 @@ import com.google.android.material.appbar.AppBarLayout
 //import kotlinx.android.synthetic.main.activity_main.progress_bar
 
 class MainActivity : BaseActivity(),
-        BottomNavController.NavGraphProvider,
-        BottomNavController.OnNavigationGraphChanged,
-        BottomNavController.OnNavigationReselectedListener {
+    BottomNavController.NavGraphProvider,
+    BottomNavController.OnNavigationGraphChanged,
+    BottomNavController.OnNavigationReselectedListener {
 
     private lateinit var bottomNavigationView: BottomNavigationView
 
@@ -52,7 +55,7 @@ class MainActivity : BaseActivity(),
         setupActionBar(tool_bar)
         bottomNavigationView = findViewById(R.id.bottom_navigation_view)
         bottomNavigationView.setUpNavigation(bottomNavController, this)
-        if(savedInstanceState == null){
+        if (savedInstanceState == null) {
             bottomNavController.onNavigationItemSelected()
         }
 
@@ -78,7 +81,7 @@ class MainActivity : BaseActivity(),
     }
 
 
-    override fun displayProgresssBar(bool: Boolean) {
+    override fun displayProgressBar(bool: Boolean) {
         val progress_bar = findViewById<ProgressBar>(R.id.progress_bar)
         if (bool) {
             progress_bar.visibility = View.VISIBLE
@@ -87,60 +90,80 @@ class MainActivity : BaseActivity(),
         }
     }
 
-    override fun getNavGraphId(itemId: Int) = when(itemId) {
-           R.id.nav_blog ->{
-             R.navigation.nav_blog
-         }
-           R.id.nav_account ->{
+    override fun getNavGraphId(itemId: Int) = when (itemId) {
+        R.id.nav_blog -> {
+            R.navigation.nav_blog
+        }
+        R.id.nav_account -> {
             R.navigation.nav_account
         }
-           R.id.nav_create_blog ->{
-             R.navigation.nav_create_blog
+        R.id.nav_create_blog -> {
+            R.navigation.nav_create_blog
         }
-           else ->{
-             R.navigation.nav_blog
-         }
+        else -> {
+            R.navigation.nav_blog
+        }
     }
 
-    private fun setupActionBar(tool_bar: Toolbar){
+    private fun setupActionBar(tool_bar: Toolbar) {
         setSupportActionBar(tool_bar)
 
     }
 
     override fun onGraphChanged() {
-      expandAppbar()
+        expandAppbar()
+        cancelActiveJobs()
     }
 
-    override fun onReselectNavItem(navController: NavController, fragment: Fragment) = when(fragment){
+    override fun onReselectNavItem(navController: NavController, fragment: Fragment) =
+        when (fragment) {
 
-        is ViewBlogFragment -> {
-            navController.navigate(R.id.action_viewBlogFragment_to_blogFragment)
-        }
+            is ViewBlogFragment -> {
+                navController.navigate(R.id.action_viewBlogFragment_to_blogFragment)
+            }
 
-        is UpdateBlogFragment -> {
-            navController.navigate(R.id.action_updateBlogFragment_to_blogFragment)
-        }
+            is UpdateBlogFragment -> {
+                navController.navigate(R.id.action_updateBlogFragment_to_blogFragment)
+            }
 
-        is UpdateAccountFragment -> {
-            navController.navigate(R.id.action_updateAccountFragment_to_accountFragment)
-        }
+            is UpdateAccountFragment -> {
+                navController.navigate(R.id.action_updateAccountFragment_to_accountFragment)
+            }
 
-        is ChangePasswordFragment -> {
-            navController.navigate(R.id.action_changePasswordFragment_to_accountFragment)
+            is ChangePasswordFragment -> {
+                navController.navigate(R.id.action_changePasswordFragment_to_accountFragment)
+            }
+            else -> {
+                //do nothing
+            }
         }
-        else -> {
-            //do nothing
-        }
-    }
 
     override fun onBackPressed() = bottomNavController.onBackPressed()
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item?.itemId){
+        when (item?.itemId) {
             android.R.id.home -> onBackPressed()
         }
         return super.onOptionsItemSelected(item)
     }
+
+    private fun cancelActiveJobs() {
+        val fragments = bottomNavController.fragmentManager
+            .findFragmentById(bottomNavController.containerId)?.childFragmentManager
+            ?.fragments
+        if (fragments != null) {
+            for (fragment in fragments) {
+                when (fragment) {
+                    is BaseAccountFragment -> fragment.cancelActiveJobs()
+                    is BaseBlogFragment -> fragment.cancelActiveJobs()
+                    is BaseCreateBlogFragment -> fragment.cancelActiveJobs()
+
+                }
+            }
+        }
+        displayProgressBar(false)
+    }
+
 
     override fun expandAppbar() {
         findViewById<AppBarLayout>(R.id.app_bar).setExpanded(true)

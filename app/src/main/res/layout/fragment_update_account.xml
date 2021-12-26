@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context=".ui.main.account.UpdateAccountFragment"
+
         android:fillViewport="true"
         android:background="#fff">
 
@@ -33,6 +33,8 @@
                     android:textColor="#000"
                     android:inputType="textEmailAddress"
                     android:id="@+id/input_email"
+                android:imeOptions="flagNoExtractUi"
+
 
                     />
 
@@ -58,6 +60,7 @@
                     android:textColor="#000"
                     android:inputType="text"
                     android:layout_marginTop="30dp"
+                android:imeOptions="flagNoExtractUi"
 
                     />
 

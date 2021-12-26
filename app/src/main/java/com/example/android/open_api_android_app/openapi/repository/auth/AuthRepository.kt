@@ -11,6 +11,7 @@ import com.example.android.open_api_android_app.openapi.models.AccountProperties
 import com.example.android.open_api_android_app.openapi.models.AuthToken
 import com.example.android.open_api_android_app.openapi.persistence.AccountPropertiesDao
 import com.example.android.open_api_android_app.openapi.persistence.AuthTokenDao
+import com.example.android.open_api_android_app.openapi.repository.JobManager
 import com.example.android.open_api_android_app.openapi.repository.NetworkBoundResource
 import com.example.android.open_api_android_app.openapi.session.SessionManager
 import com.example.android.open_api_android_app.openapi.ui.Data
@@ -41,9 +42,9 @@ constructor(
     val sharedPreferences: SharedPreferences,
     val sharedPrefsEditor: SharedPreferences.Editor
 
-){
+): JobManager("AuthRepository"){
     private  val TAG = "AppDebug"
-    private var repositoryJob: Job? = null
+
 
     fun attemptLogin(email: String, password: String): LiveData<DataState<AuthViewState>>{
 
@@ -56,6 +57,7 @@ constructor(
         return object: NetworkBoundResource<LoginResponse,Any, AuthViewState>(
             sessionManager.isConnectedToInternet(),
         true,
+            true,
         false
         ){
             override suspend fun handleApiSuccessResponse(response: ApiSuccessResponse<LoginResponse>) {
@@ -110,8 +112,7 @@ constructor(
             }
 
             override fun setJob(job: Job) {
-                repositoryJob?.cancel()
-                repositoryJob= job
+               addJob("attemptLogin",job)
             }
 
             //Ignore
@@ -142,6 +143,7 @@ constructor(
 
             return object: NetworkBoundResource<RegistrationResponse, Any, AuthViewState>(
                 sessionManager.isConnectedToInternet(),
+                true,
                 true,
             false
             ){
@@ -198,8 +200,7 @@ constructor(
                 }
 
                 override fun setJob(job: Job) {
-                    repositoryJob?.cancel()
-                    repositoryJob= job
+                   addJob("attemptRegistration",job)
                 }
 
                 //Ignore
@@ -233,6 +234,7 @@ constructor(
        return object: NetworkBoundResource<Void, Any, AuthViewState>(
             sessionManager.isConnectedToInternet(),
         false,
+           false,
            false
         ){
            override suspend fun createCacheRequestAndReturn() {
@@ -281,8 +283,7 @@ constructor(
            }
 
            override fun setJob(job: Job) {
-               repositoryJob?.cancel()
-               repositoryJob= job
+               addJob("checkPreviousAuthUser", job)
 
            }
 
@@ -317,10 +318,7 @@ constructor(
 
     }
 
-    fun cancelActivityJobs(){
-        Log.d(TAG, "AuthRepository: cancelActivityJobs: cancelling on-going jobs.")
-        repositoryJob?.cancel()
-    }
+
 
     private fun returnErrorResponse(errorMessage: String, responseType: ResponseType): LiveData<DataState<AuthViewState>> {
         Log.d(TAG, "returnErrorResponse: ${errorMessage}")

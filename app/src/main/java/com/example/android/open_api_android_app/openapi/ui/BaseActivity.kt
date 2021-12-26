@@ -1,6 +1,8 @@
 package com.example.android.open_api_android_app.openapi.ui
 
+import android.content.Context
 import android.util.Log
+import android.view.inputmethod.InputMethodManager
 import com.example.android.open_api_android_app.openapi.session.SessionManager
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.coroutines.Dispatchers.Main
@@ -18,7 +20,7 @@ abstract class BaseActivity: DaggerAppCompatActivity(), DataStateChangeListener{
     override fun onDataStateChange(dataState: DataState<*>?) {
        dataState?.let{
            GlobalScope.launch(Main){
-               displayProgresssBar(it.loading.isLoading)
+               displayProgressBar(it.loading.isLoading)
                it.error?.let{errorEvent ->
                    handleStateError(errorEvent)
                }
@@ -83,7 +85,17 @@ abstract class BaseActivity: DaggerAppCompatActivity(), DataStateChangeListener{
 
     }
 
-    abstract fun displayProgresssBar(bool: Boolean)
+    override fun hideSoftKeyboard() {
+        if(currentFocus != null){
+            val inputMethodManager = getSystemService(
+                Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
+
+
+        }
+    }
+
+    abstract fun displayProgressBar(bool: Boolean)
 
 
 }
