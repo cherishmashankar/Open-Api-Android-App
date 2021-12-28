@@ -21,6 +21,7 @@
             android:text="go to ViewBlogFragment"
             android:id="@+id/goViewBlogFragment"
             android:layout_marginTop="50dp"
+        android:visibility="invisible"
             />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

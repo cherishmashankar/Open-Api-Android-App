@@ -5,4 +5,6 @@ sealed class BlogStateEvent {
     class BlogSearchEvent : BlogStateEvent()
 
     class None: BlogStateEvent()
+
+    class CheckAuthorOfBlogPost: BlogStateEvent()
 }

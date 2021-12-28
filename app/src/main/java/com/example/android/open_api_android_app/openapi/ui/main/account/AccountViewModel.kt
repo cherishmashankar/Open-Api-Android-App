@@ -7,9 +7,11 @@ import com.example.android.open_api_android_app.openapi.repository.main.AccountR
 import com.example.android.open_api_android_app.openapi.session.SessionManager
 import com.example.android.open_api_android_app.openapi.ui.BaseViewModel
 import com.example.android.open_api_android_app.openapi.ui.DataState
+import com.example.android.open_api_android_app.openapi.ui.Loading
 import com.example.android.open_api_android_app.openapi.ui.auth.state.AuthStateEvent
 import com.example.android.open_api_android_app.openapi.ui.main.account.state.AccountStateEvent
 import com.example.android.open_api_android_app.openapi.ui.main.account.state.AccountViewState
+import com.example.android.open_api_android_app.openapi.ui.main.blog.state.BlogViewState
 import com.example.android.open_api_android_app.openapi.util.AbsentLiveData
 import javax.inject.Inject
 
@@ -55,7 +57,16 @@ constructor(
                 }?: AbsentLiveData.create()
             }
             is AccountStateEvent.None ->{
-                return AbsentLiveData.create()
+                return object: LiveData<DataState<AccountViewState>>(){
+                    override fun onActive() {
+                        super.onActive()
+                        value = DataState(
+                            null,
+                            Loading(false),
+                            null
+                        )
+                    }
+                }
             }
 
         }

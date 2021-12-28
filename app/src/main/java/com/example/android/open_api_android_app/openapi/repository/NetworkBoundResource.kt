@@ -81,7 +81,7 @@ abstract class NetworkBoundResource<ResponseObject, CachedObject,ViewStateType>
         coroutineScope.launch {
 
             // simulate a network delay for testing
-            delay(TESTING_NETWORK_DELAY)
+           // delay(TESTING_NETWORK_DELAY)
 
 
             withContext(Main) {

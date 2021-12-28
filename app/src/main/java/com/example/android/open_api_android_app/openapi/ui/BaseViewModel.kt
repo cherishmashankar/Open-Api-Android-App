@@ -1,5 +1,6 @@
 package com.example.android.open_api_android_app.openapi.ui
 
+import androidx.constraintlayout.motion.utils.ViewState
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -24,6 +25,10 @@ abstract class BaseViewModel<StateEvent, ViewState>: ViewModel() {
 
     fun setStateEvent(event: StateEvent){
         _stateEvent.value = event
+    }
+    fun setViewState(viewState: ViewState){
+        _viewState.value = viewState
+
     }
 
     fun getCurrentViewStateOrNew(): ViewState{

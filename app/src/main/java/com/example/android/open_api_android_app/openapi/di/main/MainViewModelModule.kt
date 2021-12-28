@@ -3,7 +3,7 @@ package com.example.android.open_api_android_app.openapi.di.main
 import androidx.lifecycle.ViewModel
 import com.example.android.open_api_android_app.openapi.di.ViewModelKey
 import com.example.android.open_api_android_app.openapi.ui.main.account.AccountViewModel
-import com.example.android.open_api_android_app.openapi.ui.main.blog.BlogViewModel
+import com.example.android.open_api_android_app.openapi.ui.main.blog.viewmodel.BlogViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
